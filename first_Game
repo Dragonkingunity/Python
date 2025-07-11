@@ -1,0 +1,160 @@
+import random
+
+#Players stats
+starting_stats = [1, 2, 3]
+
+#Enemy and stats
+enemy_power = [1, 2]
+
+playing = True
+
+stats = 'Magic,' 'Strength,' 'Ranged'
+
+enemies = 'Mage', 'Ranger', 'Fighter'
+
+name = input('Whats your characters name?')
+
+print(f'\nHello {name} welcome to the game!!\n')
+
+#Player stats
+#_stat for player
+strength_stat = random.choice(starting_stats)
+magic_stat = random.choice(starting_stats)
+ranged_stat = random.choice(starting_stats)
+
+#Enemy stats
+#_power for enemy
+mage_power = random.choice(enemy_power)
+fighter_power = random.choice(enemy_power)
+ranger_power = random.choice(enemy_power)
+
+print('The match ups are below learn them.', '\nMagic > Strength \nStrength > Ranged \nRanged > Magic\n Each advantage gives +2 to your stats.\n Each disadvantage gives -2 to your stats.\n')
+print('The stat changes are temporary!')
+
+print('\nYour starting stats are as follows', f'\nStrength: {strength_stat}\nMagic: {magic_stat}\nRanged: {ranged_stat}\n')
+
+while playing:
+    stat_choice = "None"
+    fight_choice = None
+
+    print('These are the enemy stats.', f'\nMage stats: {mage_power}\nFighter stats: {fighter_power}\nRanger stats: {ranger_power}\n')
+
+    while stat_choice not in stats:
+        stat_choice = input('\nWhat stat are you using to fight?').capitalize()
+
+    while fight_choice not in enemies:
+        fight_choice = input('\nWho are you fighting?').capitalize()
+
+    print(f'\nYou are fighting {fight_choice} with {stat_choice}.\n')
+    
+   #def ranger_fight ():
+    if fight_choice == 'Ranger' and stat_choice == 'Strength':
+        strength_stat = strength_stat + 2
+        fight = strength_stat - ranger_power
+        strength_stat = strength_stat - 2
+
+        if fight > 0:
+            print(f'{name} won by this much {fight}!:D')
+        elif fight < 0:
+            print(f'{name} lost by this much {fight}!D:')
+        else:
+            print(f'{name} barely made it. 0 No remaing power from this battle!!')
+
+    elif fight_choice == 'Ranger' and stat_choice == 'Ranged':
+        fight = ranged_stat - ranger_power
+        
+        if fight > 0:
+            print(f'{name} won by this much {fight}!:D')
+        elif fight < 0:
+            print(f'{name} lost by this much {fight}!D:')
+        else:
+            print(f'{name} barely made it. 0 No remaing power from this battle!!')
+    
+    elif fight_choice == 'Ranger' and stat_choice == 'Magic':
+        magic_stat = magic_stat - 2
+        fight = magic_stat - ranger_power
+        magic_stat = magic_stat + 2
+
+        if fight > 0:
+            print(f'{name} won by this much {fight}!:D')
+        elif fight < 0:
+            print(f'{name} lost by this much {fight}!D:')
+        else:
+            print(f'{name} barely made it. 0 No remaing power from this battle!!')
+
+
+
+    #def fighter_fight ():
+    elif fight_choice == 'Fighter' and stat_choice == 'Magic':
+        magic_stat = magic_stat + 2
+        fight = magic_stat - fighter_power
+        magic_stat = magic_stat - 2
+
+        if fight > 0:
+            print(f'{name} won by this much {fight}!:D')
+        elif fight < 0:
+            print(f'{name} lost by this much {fight}!D:')
+        else:
+            print(f'{name} barely made it. 0 No remaing power from this battle!!')
+
+    elif fight_choice == 'Fighter' and stat_choice == 'Strength':
+        fight = strength_stat - fighter_power
+        
+        if fight > 0:
+            print(f'{name} won by this much {fight}!:D')
+        elif fight < 0:
+            print(f'{name} lost by this much {fight}!D:')
+        else:
+            print(f'{name} barely made it. 0 No remaing power from this battle!!')
+            
+    elif fight_choice == 'Fighter' and stat_choice == 'Ranged':
+        ranged_stat = ranged_stat - 2
+        fight = ranged_stat - fighter_power
+        ranged_stat = ranged_stat + 2
+
+        if fight > 0:
+            print(f'{name} won by this much {fight}!:D')
+        elif fight < 0:
+            print(f'{name} lost by this much {fight}!D:')
+        else:
+            print(f'{name} barely made it. 0 No remaing power from this battle!!')
+
+
+    #def mage_fight ():
+    elif fight_choice == 'Mage' and stat_choice == 'Ranged':
+        ranged_stat = ranged_stat + 2
+        fight = ranged_stat - mage_power
+        ranged_stat = ranged_stat - 2
+
+        if fight > 0:
+            print(f'{name} won by this much {fight}!:D')
+        elif fight < 0:
+            print(f'{name} lost by this much {fight}!D:')
+        else:
+            print(f'{name} barely made it. 0 No remaing power from this battle!!')
+
+    elif fight_choice == 'Mage' and stat_choice == 'Magic':
+        fight = magic_stat - mage_power
+        
+        if fight > 0:
+            print(f'{name} won by this much {fight}!:D')
+        elif fight < 0:
+            print(f'{name} lost by this much {fight}!D:')
+        else:
+            print(f'{name} barely made it. 0 No remaing power from this battle!!')
+            
+    elif fight_choice == 'Mage' and stat_choice == 'Strength':
+        strength_stat = strength_stat - 2
+        fight = strength_stat - mage_power
+        strength_stat = strength_stat + 2
+
+        if fight > 0:
+            print(f'{name} won by this much {fight}!:D')
+        elif fight < 0:
+            print(f'{name} lost by this much {fight}!D:')
+        else:
+            print(f'{name} barely made it. 0 No remaing power from this battle!!')
+
+
+    if not input("Play again? (y/n): ").lower() == "y":
+        playing = False

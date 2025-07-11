@@ -1,0 +1,30 @@
+freight = int(input('type the amount of freight we have'))
+people = int(input('How many people are at work today'))
+
+
+print(f'Freight for today: {freight}', f'Number of People here today: {people}')
+
+#how much a person can carry
+carry = 2
+
+#start_time = 2:20
+
+#how many sections are there and how far away are each pallet
+
+#def calculator():
+while freight != 0:
+    moved = carry * people
+
+    each_person_move = freight // moved
+
+    amount_moved = each_person_move * moved
+
+    freight = (freight // moved)
+
+    #freight = freight - amount_moved
+
+
+    print(f'every thing moved {amount_moved}',f'How much freight is left at the end {freight}' ,f'How much each person has to move {each_person_move}')
+
+    freight = 0
+#calculator()
