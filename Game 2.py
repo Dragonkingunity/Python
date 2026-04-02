@@ -4,31 +4,47 @@ import random
 p_Hp = 100
 p_Mp = 50
 p_Atk = 20
-p_min_Atk = 5  # ✅ added minimum attack
+p_min_Atk = 5
 p_Xp = 0
 p_Level = 1
+
+# Crate monster stages
+stage_0 = ["Goblin", "Elf"]
+stage_1 = ["Hobgoblin", "Wood Elf"]
+stage_2 = ["Ogre", "Dark Elf", "Wight"]
+stage_3 = ["Troll", "High Elf", "Wight King"]
+
 
 # Monster progression
 monster_progression = {
     "Goblin":      {"hp": 30,  "mp": 10,  "atk": 5,  "xp": 20,  "next": "Ogre"},
-    "Ogre":        {"hp": 50,  "mp": 30,  "atk": 10, "xp": 35,  "next": "Orc"},
-    "Orc":         {"hp": 100, "mp": 50,  "atk": 25, "xp": 50,  "next": "Troll"},
+    "Hobgoblin":        {"hp": 50,  "mp": 30,  "atk": 10, "xp": 35,  "next": "Orc"},
+    "Ogre":         {"hp": 100, "mp": 50,  "atk": 25, "xp": 50,  "next": "Troll"},
     "Troll":       {"hp": 150, "mp": 100, "atk": 35, "xp": 70,  "next": "Goblin King"},
-    "Goblin King": {"hp": 200, "mp": 150, "atk": 50, "xp": 100, "next": None},
+    "Goblin King": {"hp": 300, "mp": 150, "atk": 50, "xp": 100, "next": None},
+    "Elf":         {"hp": 40,  "mp": 30,  "atk": 10, "xp": 25,  "next": "Wood Elf"},
+    "Wood Elf":    {"hp": 60,  "mp": 60,  "atk": 15, "xp": 40,  "next": "Dark Elf"},
+    "Dark Elf":    {"hp": 80,  "mp": 100, "atk": 20, "xp": 60,  "next": "High Elf"},
+    "High Elf":    {"hp": 120, "mp": 150, "atk": 30, "xp": 80,  "next": "Elf Queen"},
+    "Elf Queen":   {"hp": 250, "mp": 300, "atk": 50, "xp": 120, "next": None},
+    "Wight":    {"hp": 20,  "mp": 100,   "atk": 5,  "xp": 15,  "next": "Wight King"},
+    "Wight King":  {"hp": 50,  "mp": 300,   "atk": 10, "xp": 30,  "next": "Lich"},
+    "Lich":          {"hp": 100, "mp": 500, "atk": 20, "xp": 60,  "next": None},
 }
 
-monster_list = ["Goblin", "Ogre", "Orc", "Troll"]
-boss_list = ["Goblin King", "Elf Queen"]
+monster_list = ["Goblin", "Ogre", "Orc", "Troll", "Elf", "Wood Elf", "Dark Elf", "High Elf", "Wight", "Wight King", "Death Spirit"]
+boss_list = ["Goblin King", "Elf Queen", "Lich"]
 
 def level_up():
-    global p_Mp, p_Atk, p_min_Atk, p_Xp, p_Level
+    global p_Hp, p_Mp, p_Atk, p_min_Atk, p_Xp, p_Level  
     p_Level += 1
+    p_Hp = 100 + (p_Level - 1) * 20  
     p_Mp += 10
     p_Atk += 10
-    p_min_Atk += 5  # ✅ boost minimum damage on level up
+    p_min_Atk += 5
     p_Xp = 0
     print(f"\n*** LEVEL UP! You are now Level {p_Level}! ***")
-    print(f"MP: {p_Mp} | ATK: {p_min_Atk}-{p_Atk}")
+    print(f"HP: {p_Hp} | MP: {p_Mp} | ATK: {p_min_Atk}-{p_Atk}")
 
 def battle(current_monster):
     global p_Hp, p_Xp
@@ -43,10 +59,10 @@ def battle(current_monster):
     print(f"\n--- A {current_monster} appears! ---")
     print(f"Monster HP: {m_Hp} | MP: {m_Mp} | ATK: {m_Atk}")
 
-    for turn in range(1, 4):
+    for turn in range(1, 6):
         print(f"\n-- Turn {turn} --")
 
-        p_damage = random.randint(p_min_Atk, p_Atk)  # ✅ uses p_min_Atk
+        p_damage = random.randint(p_min_Atk, p_Atk)
         m_Hp -= p_damage
         print(f"You deal {p_damage} damage! Monster HP: {max(m_Hp, 0)}")
 
@@ -76,6 +92,7 @@ def battle(current_monster):
 
 # --- Game loop ---
 goblin_count = 0
+elf_count = 0
 current_monster = "Goblin"
 
 while True:
@@ -91,11 +108,20 @@ while True:
     if current_monster == "Goblin" and goblin_count < 5:
         goblin_count += 1
 
+    if current_monster == "Elf" and elf_count < 5:
+        elf_count += 1
+
     if goblin_count < 5:
         print(f"\nAnother Goblin approaches! ({goblin_count}/5)")
         current_monster = "Goblin"
-    elif goblin_count == 5 and result == "Goblin":
-        print(f"\nYou defeated 5 Goblins! Stronger monsters await...")
+    elif goblin_count == 5 and elf_count == 0:
+        print(f"\nYou defeated 5 Goblins! The Elves emerge from the forest...")
+        current_monster = "Elf"
+    elif elf_count < 5:
+        print(f"\nAnother Elf approaches! ({elf_count}/5)")
+        current_monster = "Elf"
+    elif elf_count == 5 and result == "Elf":
+        print(f"\nYou defeated 5 Elves! Stronger monsters await...")
         current_monster = random.choice(monster_list)
     else:
         current_monster = result
